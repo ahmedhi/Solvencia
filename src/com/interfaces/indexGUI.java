@@ -1,14 +1,12 @@
 package com.interfaces;
 
-import javax.imageio.ImageIO;
+import com.interfaces.Customer.CustomerGUI;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class indexGUI extends JFrame implements ActionListener {
 
@@ -30,17 +28,11 @@ public class indexGUI extends JFrame implements ActionListener {
     }
 
     public void initJLabels(){
-        /*
-        ImageIcon icon = new ImageIcon();
-        try {
-            BufferedImage img = ImageIO.read(new File("//home//britos//Documents//Solvencia//Solvencia.png"));
-            icon = new ImageIcon( img );
-        }catch ( IOException e){
-            e.printStackTrace();
-        }
-        SolvenciaPng = new JLabel( );
-        SolvenciaPng.setIcon( icon );
-         */
+
+        SolvenciaPng = new JLabel();
+            String URL = "src/Solvencia.png" ;
+            SolvenciaPng.setIcon(new ImageIcon(new ImageIcon(URL).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+
 
         JLogin = new JLabel("Nom d'utilisateur");
         JLogin.setForeground(PrimaryColor);
@@ -67,14 +59,13 @@ public class indexGUI extends JFrame implements ActionListener {
             NorthPanel.add( new JLabel("Solvencia") );
 
         CenterPanel = new JPanel( new GridLayout( 3,1 ) );
+            JPanel SubCenterPanel = new JPanel();
             // LOGO CenterPanel.add(SolvenciaPng);
-            ImageIcon icon = new ImageIcon("Solvencia.png");
-            JLabel thumb = new JLabel();
-            thumb.setIcon( icon );
-        CenterPanel.add( thumb );
+            SubCenterPanel.add( SolvenciaPng );
+        CenterPanel.add( SubCenterPanel );
 
             //Login & Password
-                JPanel SubCenterPanel = new JPanel( new GridLayout( 3,1));
+                SubCenterPanel = new JPanel( new GridLayout( 3,1));
                     JPanel TmpPanel = new JPanel();
                     TmpPanel.setBorder( new EmptyBorder( 10,10,10,10));
                     TmpPanel.add( JConnexionLabel );
@@ -103,14 +94,10 @@ public class indexGUI extends JFrame implements ActionListener {
             SouthPanel.add(JBinome);
             SouthPanel.add(JVersion);
 
-        this.getContentPane().add( NorthPanel , BorderLayout.NORTH );
-        this.getContentPane().add( CenterPanel , BorderLayout.CENTER );
-        this.getContentPane().add( SouthPanel , BorderLayout.SOUTH );
     }
 
-
     public indexGUI(){
-        this.setTitle("Gestion EMSI");
+        this.setTitle("Solvencia");
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -125,6 +112,10 @@ public class indexGUI extends JFrame implements ActionListener {
 
         initPanels();
 
+        this.getContentPane().add( NorthPanel , BorderLayout.NORTH );
+        this.getContentPane().add( CenterPanel , BorderLayout.CENTER );
+        this.getContentPane().add( SouthPanel , BorderLayout.SOUTH );
+
         this.setVisible( true );
 
 
@@ -136,7 +127,12 @@ public class indexGUI extends JFrame implements ActionListener {
         Object source = actionEvent.getSource();
 
         if( source == JLoginButton ){
-            System.out.println("TEST");
+
+            CustomerGUI Customer = new CustomerGUI();
+
+            this.dispose();
+
+
         }
 
     }
