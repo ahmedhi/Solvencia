@@ -1,12 +1,12 @@
-import com.interfaces.*;
-
-import java.io.File;
+import com.algorithme.Solvabilite;
 
 public class Solvencia {
 
     public static void main( String[] args ){
 
-        indexGUI index = new indexGUI();
+        Solvabilite Client = new Solvabilite();
+
+        //indexGUI index = new indexGUI();
 
     }
 
