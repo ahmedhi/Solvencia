@@ -9,7 +9,8 @@ public class LoginGUI extends JFrame implements ActionListener {
     JPanel LeftPanel , RightPanel  , SouthPanel , TitlePanel , FormPanel;
     JButton ConnexionButton ;
     JLabel LoginLabel , NameUserLabel , PasswordLabel , TitleLabel;
-    JTextField LoginText , PassText ;
+    JTextField LoginText ;
+    JPasswordField PassText ;
     Color GrayGUI , GreenGUI;
 
 
@@ -20,7 +21,8 @@ public class LoginGUI extends JFrame implements ActionListener {
     public void initButtons(){
         ConnexionButton = new JButton("Connexion");
         ConnexionButton.setBackground(GreenGUI);
-        ConnexionButton.setForeground(GrayGUI);
+        ConnexionButton.setForeground(Color.WHITE);
+        ConnexionButton.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, GreenGUI));
         ConnexionButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
         ConnexionButton.addActionListener( this );
     }
@@ -28,7 +30,7 @@ public class LoginGUI extends JFrame implements ActionListener {
         LoginText = new JTextField();
         LoginText.setBackground((Color.WHITE));
 
-        PassText = new JTextField();
+        PassText = new JPasswordField();
         PassText.setBackground((Color.WHITE));
     }
     public void initLabels(){
@@ -53,10 +55,10 @@ public class LoginGUI extends JFrame implements ActionListener {
 
     }
     public void initPanels(){
-       LeftPanel = new JPanel();
-       LeftPanel.setBackground(GrayGUI);
-       LeftPanel.setPreferredSize(new Dimension(250,415));
-       LeftPanel.add(LoginLabel);
+        LeftPanel = new JPanel();
+        LeftPanel.setBackground(GrayGUI);
+        LeftPanel.setPreferredSize(new Dimension(250,415));
+        LeftPanel.add(LoginLabel);
 
         TitlePanel = new JPanel();
         TitlePanel.setBackground((Color.WHITE));
@@ -71,14 +73,10 @@ public class LoginGUI extends JFrame implements ActionListener {
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.ipady = gc.anchor = GridBagConstraints.CENTER;
         gc.ipadx = GridBagConstraints.CENTER;
-        gc.weightx = 4;
-        gc.weighty = 3;
+        gc.weightx = 3;
+        gc.weighty = 5;
 
         gc.gridx = 0;
-        gc.gridy = 0;
-        FormPanel.add(new JLabel(), gc);
-
-        gc.gridx = 3;
         gc.gridy = 0;
         FormPanel.add(new JLabel(), gc);
 
@@ -86,7 +84,7 @@ public class LoginGUI extends JFrame implements ActionListener {
         gc.gridy = 1;
         FormPanel.add(NameUserLabel, gc);
 
-        gc.gridx = 2;
+        gc.gridx = 1;
         gc.gridy = 1;
         gc.gridwidth = 2;
         FormPanel.add(LoginText, gc);
@@ -95,22 +93,30 @@ public class LoginGUI extends JFrame implements ActionListener {
         gc.gridy = 2;
         FormPanel.add(PasswordLabel, gc);
 
-        gc.gridx = 2;
+        gc.gridx = 1;
         gc.gridy = 2;
         gc.gridwidth = 2;
         FormPanel.add(PassText, gc);
 
-       SouthPanel = new JPanel();
-       SouthPanel.add(ConnexionButton);
-       SouthPanel.setBackground(Color.WHITE);
-       SouthPanel.setPreferredSize(new Dimension(350,50));
+        gc.gridx = 1;
+        gc.gridy = 3;
+        FormPanel.add(ConnexionButton, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 4;
+        FormPanel.add(new JLabel(), gc);
+
+        SouthPanel = new JPanel();
+        SouthPanel.add(ConnexionButton);
+        SouthPanel.setBackground(Color.WHITE);
+        SouthPanel.setPreferredSize(new Dimension(350,50));
 
 
-       RightPanel = new JPanel();
-       RightPanel.setLayout(new BorderLayout());
-       RightPanel.add(TitlePanel, BorderLayout.NORTH);
-       RightPanel.add(FormPanel,BorderLayout.CENTER);
-       RightPanel.add(SouthPanel,BorderLayout.SOUTH);
+        RightPanel = new JPanel();
+        RightPanel.setLayout(new BorderLayout());
+        RightPanel.add(TitlePanel, BorderLayout.NORTH);
+        RightPanel.add(FormPanel,BorderLayout.CENTER);
+        RightPanel.add(SouthPanel,BorderLayout.SOUTH);
 
     }
     public LoginGUI(){
@@ -118,7 +124,7 @@ public class LoginGUI extends JFrame implements ActionListener {
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setSize(600,430);
+        this.setSize(700,430);
         this.setLocationRelativeTo( null );
 
         initColors();

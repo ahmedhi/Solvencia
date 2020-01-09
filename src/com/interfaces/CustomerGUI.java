@@ -11,7 +11,7 @@ public class CustomerGUI extends JFrame implements ActionListener {
     JLabel NameLabel , PrenomLabel  , CINLabel , AgeLabel , HeaderLabel , FooterLabel ;
     JTextField NameText , PrenomText , CINText , AgeText;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
-
+    Double Age ;
     public void initColors(){
         GrayGUI = new Color(24, 37, 48);
         GreenGUI = new Color(139, 193, 64);
@@ -72,11 +72,11 @@ public class CustomerGUI extends JFrame implements ActionListener {
         AgeLabel.setForeground(GreenGrayGUI);
 
         HeaderLabel = new JLabel ();
-        HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img/header.png")));
+       // HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/src/Img/Header-ConvertImage.png")));
         HeaderLabel.setPreferredSize(new Dimension(500,100));
 
         FooterLabel = new JLabel ();
-        FooterLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img/footer.png")));
+       // FooterLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/src/Img/footer.png")));
         FooterLabel.setPreferredSize(new Dimension(800,20));
     }
     public void initPanels(){
@@ -180,7 +180,8 @@ public class CustomerGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == NextButton ){
-            CustomerSuiteGUI index = new CustomerSuiteGUI();
+            Age = Double.parseDouble(AgeText.getText());
+            CustomerSuiteGUI index = new CustomerSuiteGUI(Age);
             this.dispose();
         }
         else if ( source == DecButton){
@@ -188,7 +189,7 @@ public class CustomerGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == AdminButton){
-            CustomerSuiteGUI index = new CustomerSuiteGUI();
+            AdminGUI index = new AdminGUI();
             this.dispose();
         }
     }

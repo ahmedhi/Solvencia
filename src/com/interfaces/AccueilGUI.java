@@ -3,10 +3,9 @@ package com.interfaces;
 import javax.swing.*;
 import java.awt.*;
 
-public class AccueilGUI extends JFrame {
+public class  AccueilGUI extends JFrame {
     JPanel MasterPanel ;
     JLabel AccueilLabel ;
-    JProgressBar ProgressBar;
     Color GrayGUI , GreenGUI , GreenGrayGUI ;
 
 
@@ -33,8 +32,8 @@ public class AccueilGUI extends JFrame {
             try{
                 Thread.sleep(25);
                 i++;
-                    if(i== 100)
-                        this.dispose();
+                if(i== 100)
+                    this.dispose();
             }catch(Exception e){
                 e.printStackTrace();
             }

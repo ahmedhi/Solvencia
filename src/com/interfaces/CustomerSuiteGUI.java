@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerSuiteGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , CenterPanel, SouthPanel;
@@ -12,6 +14,8 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
     JTextField NbrText , SalaireText , DepenseText;
     JComboBox SFComboBox ;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI  ;
+
+    Double Age ;
 
     public void initComoboBox(){
         Object[] elements = new Object[]{"Marié", "Célebataire", "Divorcé"};
@@ -80,21 +84,23 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
         SFLabel.setForeground(GreenGrayGUI);
 
         HLabel = new JLabel ();
-        HLabel.setIcon(new ImageIcon(CustomerSuiteGUI.class.getResource("/Img/header.png")));
+      //  HLabel.setIcon(new ImageIcon(CustomerSuiteGUI.class.getResource("/Img_Header_Suite/Header_Suite.png")));
         HLabel.setPreferredSize(new Dimension(500,100));
 
         FLabel = new JLabel ();
-        FLabel.setIcon(new ImageIcon(CustomerSuiteGUI.class.getResource("/Img/footer.png")));
-        FLabel.setPreferredSize(new Dimension(800,25));
+       // FLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img/footer.png")));
+        FLabel.setPreferredSize(new Dimension(800,20));
     }
     public void initPanels(){
         NorthPanel = new JPanel();
         NorthPanel.setBackground(GrayGUI);
         NorthPanel.setPreferredSize(new Dimension(100,100));
+        NorthPanel.add(HLabel);
 
         SouthPanel = new JPanel();
         SouthPanel.setBackground(GrayGUI);
         SouthPanel.setPreferredSize(new Dimension(100,25));
+        SouthPanel.add(HLabel);
 
         CenterPanel = new JPanel() ;
         CenterPanel.setBackground((Color.WHITE));
@@ -161,7 +167,9 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
 
     }
 
-    public CustomerSuiteGUI(){
+    public CustomerSuiteGUI(Double age){
+        Age = age ;
+
         this.setTitle("Information Personnel <2> Solvencia");
 
         this.getContentPane().setLayout( new BorderLayout() );
@@ -184,16 +192,85 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
 
 
     }
-
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e ) {
         Object source = e.getSource();
 
         if( source == PreButton ){
             CustomerGUI index = new CustomerGUI();
             this.dispose();
         }
+        else if ( source == DecButton){
+            LoginGUI index = new LoginGUI();
+            this.dispose();
+        }
+        else if ( source == AdminButton){
+            AdminGUI index = new AdminGUI();
+            this.dispose();
+        }
+        else if ( source == SendButton){
+            List<Double> DataSolvencia  ;
+            DataSolvencia = new ArrayList<>();
+            if(SFComboBox.getSelectedItem().toString().equals("Marié") )
+            {
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(0.0);
+            }
+            else if(SFComboBox.getSelectedItem().toString().equals("Célibataire") )
+            {
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+            }
+            else {
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+            }
+            if (Age <= 25 )
+            {
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+            }
+            else{
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+            }
+            if(Double.parseDouble(SalaireText.getText()) <= 10000)
+            {
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+            }
+            else {
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+            }
+            if(Double.parseDouble(DepenseText.getText()) <= 7000)
+            {
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+            }
+            else {
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+            }
+            if(Double.parseDouble(NbrText.getText()) <= 2)
+            {
+                DataSolvencia.add(1.0);
+                DataSolvencia.add(0.0);
+            }
+            else {
+                DataSolvencia.add(0.0);
+                DataSolvencia.add(1.0);
+            }
 
+            //if (Solvencia( DataSolvencia ))
+            // SolvableGUI index = new SolvableGUI();
+            //else
+            NonSolvableGUI index2 = new NonSolvableGUI();
+            this.dispose();
+        }
 
 
     }
