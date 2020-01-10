@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class LogGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , SouthPanel , CenterPanel;
-    JLabel NomLabel , PrenomLabel ;
+    JLabel NomLabel , PrenomLabel , HeaderLabel , FooterLabel ;
     JButton RetButton , DecButton , LogButton  , AddConButton ,  SolvButton;
     JTable Table ;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
@@ -30,6 +30,14 @@ public class LogGUI extends JFrame implements ActionListener {
         Table.setSize(600,200);
     }
     public void initLabels(){
+        HeaderLabel = new JLabel ();
+        HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Dash/admin_header.png")));
+        HeaderLabel.setPreferredSize(new Dimension(110,110));
+
+        FooterLabel = new JLabel ();
+        FooterLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Footer/footer.png")));
+        FooterLabel.setPreferredSize(new Dimension(800,20));
+
         Font font = new Font("standard", Font.BOLD, 12);
 
         NomLabel = new JLabel("Nom : ASKOUR") ;
@@ -81,11 +89,13 @@ public class LogGUI extends JFrame implements ActionListener {
     public void initPanels(){
         NorthPanel = new JPanel();
         NorthPanel.setBackground(GrayGUI);
-        NorthPanel.setPreferredSize(new Dimension(100,100));
+        NorthPanel.setPreferredSize(new Dimension(100,115));
+        NorthPanel.add(HeaderLabel);
 
         SouthPanel = new JPanel();
         SouthPanel.setBackground(GrayGUI);
         SouthPanel.setPreferredSize(new Dimension(100,25));
+        SouthPanel.add(FooterLabel);
 
         CenterPanel = new JPanel() ;
         CenterPanel.setBackground((Color.WHITE));

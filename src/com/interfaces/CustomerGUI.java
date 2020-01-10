@@ -72,17 +72,18 @@ public class CustomerGUI extends JFrame implements ActionListener {
         AgeLabel.setForeground(GreenGrayGUI);
 
         HeaderLabel = new JLabel ();
-       // HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/src/Img/Header-ConvertImage.png")));
-        HeaderLabel.setPreferredSize(new Dimension(500,100));
+        //HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Header/Header-ConvertImage.png")));
+        HeaderLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Gif/solv.gif")));
+        HeaderLabel.setPreferredSize(new Dimension(400,100));
 
         FooterLabel = new JLabel ();
-       // FooterLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/src/Img/footer.png")));
+        FooterLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Footer/footer.png")));
         FooterLabel.setPreferredSize(new Dimension(800,20));
     }
     public void initPanels(){
         NorthPanel = new JPanel();
-        NorthPanel.setBackground(GrayGUI);
-        NorthPanel.setPreferredSize(new Dimension(500,100));
+        NorthPanel.setBackground(Color.WHITE);
+        NorthPanel.setPreferredSize(new Dimension(500,110));
         NorthPanel.add(HeaderLabel);
 
         SouthPanel = new JPanel();

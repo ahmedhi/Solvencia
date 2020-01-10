@@ -84,23 +84,24 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
         SFLabel.setForeground(GreenGrayGUI);
 
         HLabel = new JLabel ();
-      //  HLabel.setIcon(new ImageIcon(CustomerSuiteGUI.class.getResource("/Img_Header_Suite/Header_Suite.png")));
-        HLabel.setPreferredSize(new Dimension(500,100));
+        //HLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img/solvencia.gif")));
+        HLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Gif/solv.gif")));
+        HLabel.setPreferredSize(new Dimension(400,100));
 
         FLabel = new JLabel ();
-       // FLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img/footer.png")));
+        FLabel.setIcon(new ImageIcon(CustomerGUI.class.getResource("/Img_Footer/footer.png")));
         FLabel.setPreferredSize(new Dimension(800,20));
     }
     public void initPanels(){
         NorthPanel = new JPanel();
-        NorthPanel.setBackground(GrayGUI);
+        NorthPanel.setBackground(Color.WHITE);
         NorthPanel.setPreferredSize(new Dimension(100,100));
         NorthPanel.add(HLabel);
 
         SouthPanel = new JPanel();
         SouthPanel.setBackground(GrayGUI);
         SouthPanel.setPreferredSize(new Dimension(100,25));
-        SouthPanel.add(HLabel);
+        SouthPanel.add(FLabel);
 
         CenterPanel = new JPanel() ;
         CenterPanel.setBackground((Color.WHITE));
