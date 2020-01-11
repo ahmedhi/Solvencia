@@ -13,6 +13,31 @@ public class Solvabilite {
     List<Double> Weights;
     Double bias;
 
+    public com.algorithme.DataSet getDataSet() {
+        return DataSet;
+    }
+
+    public void setDataSet(com.algorithme.DataSet dataSet) {
+        DataSet = dataSet;
+    }
+
+    public List<Double> getWeights() {
+        return Weights;
+    }
+
+    public void setWeights(List<Double> weights) {
+        Weights = weights;
+    }
+
+    public Double getBias() {
+        return bias;
+    }
+
+    public void setBias(Double bias) {
+        this.bias = bias;
+    }
+
+
     List<Double> setRandomList( int _width){
         List<Double> tmpfeatures = new ArrayList<>();
         for ( int i =0 ; i < _width ; i++){
@@ -238,14 +263,20 @@ public class Solvabilite {
         }
     }
 
+    public Solvabilite( Solvabilite _Copie ){
+        DataSet = _Copie.getDataSet();
+        Weights = _Copie.getWeights();
+        bias = _Copie.getBias();
+    }
+
     public Solvabilite() throws IOException {
-        System.out.println("Initialisation de la DataSet");
+        System.out.println("Charger la DataSet");
                 FileReader input = new FileReader("src/com/algorithme/DataSet.txt");
                 LineNumberReader count = new LineNumberReader(input);
                         while (count.skip(Long.MAX_VALUE) > 0) {}
             DataSet = new DataSet( count.getLineNumber() , 11);
             System.out.println( " Features + Targets : \n" + DataSet );
-        System.out.println("Fin de l'initialisation de la DataSet ");
+        System.out.println("Fin du chargement de la DataSet ");
         System.out.println("*************************************");
 
         System.out.print("Initialisation des variables ... ");
@@ -275,6 +306,7 @@ public class Solvabilite {
         System.out.println("Fin de l'entrainement");
         System.out.println("*************************************");
 
+        /*
         System.out.print("Début du test ... ");
             List<Double> Data = new ArrayList<>();
                 for ( int i = 0 ; i < DataSet.getWidth() ; i++){
@@ -288,6 +320,7 @@ public class Solvabilite {
                     System.out.println("Le client est : Non Solvable ");
         System.out.println("Fin du test");
         System.out.println("*************************************");
+         */
 
     }
 

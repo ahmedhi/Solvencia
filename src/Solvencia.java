@@ -1,5 +1,5 @@
-import com.algorithme.Matrice;
-import com.algorithme.Solvabilite;
+import com.algorithme.*;
+import com.interfaces.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +7,8 @@ import java.io.IOException;
 public class Solvencia {
 
     public static void main( String[] args ) throws IOException {
-
-        Solvabilite Client = new Solvabilite();
-
-
+        
+        AccueilGUI index = new AccueilGUI();
 
     }
 

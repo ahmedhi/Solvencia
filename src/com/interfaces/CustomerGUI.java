@@ -1,9 +1,13 @@
 package com.interfaces;
 
+import com.Customer;
+import com.algorithme.Solvabilite;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class CustomerGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , CenterPanel, SouthPanel;
@@ -12,6 +16,8 @@ public class CustomerGUI extends JFrame implements ActionListener {
     JTextField NameText , PrenomText , CINText , AgeText;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
     Double Age ;
+    Solvabilite SOLVENCIA;
+
     public void initColors(){
         GrayGUI = new Color(24, 37, 48);
         GreenGUI = new Color(139, 193, 64);
@@ -154,7 +160,7 @@ public class CustomerGUI extends JFrame implements ActionListener {
 
     }
 
-    public CustomerGUI(){
+    public CustomerGUI() throws IOException {
         this.setTitle("Information Personnel <1> Solvencia");
 
         this.getContentPane().setLayout( new BorderLayout() );
@@ -174,6 +180,17 @@ public class CustomerGUI extends JFrame implements ActionListener {
 
         this.setVisible( true );
 
+        Runnable Solvencia = new Runnable() {
+            public void run() {
+                try {
+                    SOLVENCIA = new Solvabilite();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        new Thread(Solvencia).start();//Call it when you need to run the function
 
     }
     @Override
@@ -181,8 +198,8 @@ public class CustomerGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == NextButton ){
-            Age = Double.parseDouble(AgeText.getText());
-            CustomerSuiteGUI index = new CustomerSuiteGUI(Age);
+            Customer Client = new Customer( NameText.getText() , PrenomText.getText() , CINText.getText() , Integer.parseInt(AgeText.getText() ));
+            CustomerSuiteGUI index = new CustomerSuiteGUI( Client , SOLVENCIA );
             this.dispose();
         }
         else if ( source == DecButton){

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SolvableGUI extends JFrame implements ActionListener {
     JPanel MasterPanel , SouthPanel ;
@@ -65,7 +66,11 @@ public class SolvableGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == RetButton ){
-            CustomerGUI index = new CustomerGUI();
+            try {
+                CustomerGUI index = new CustomerGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
 

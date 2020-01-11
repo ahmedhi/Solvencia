@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LoginGUI extends JFrame implements ActionListener {
     JPanel LeftPanel , RightPanel  , SouthPanel , TitlePanel , FormPanel;
@@ -124,7 +125,7 @@ public class LoginGUI extends JFrame implements ActionListener {
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setSize(700,430);
+        this.setSize(700,450);
         this.setLocationRelativeTo( null );
 
         initColors();
@@ -145,7 +146,11 @@ public class LoginGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == ConnexionButton ){
-            CustomerGUI index = new CustomerGUI();
+            try {
+                CustomerGUI index = new CustomerGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
 

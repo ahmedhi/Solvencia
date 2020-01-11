@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LogGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , SouthPanel , CenterPanel;
@@ -19,15 +20,20 @@ public class LogGUI extends JFrame implements ActionListener {
     }
     public void initTables()
     {
-        Object[][] donnees = {
-                {"ASKOUR", "Hamza", 0.812 , "Solvable"},
-                {"HILALI", "Ahmed", 0.213 , "Non SOlvable "},
-                {"IDRISSI", "Taha", 0.698 , "Solvable"},
-                {"RGUIBI", "Abderrahmane",0.701 ,"Solvable"},
+        Object[][] data = {
+                {"ASKOUR", "Hamza", "0.812" , "Solvable"},
+                {"HILALI", "Ahmed", "0.213" , "Non SOlvable "},
+                {"IDRISSI", "Taha", "0.698" , "Solvable"},
+                {"RGUIBI", "Abderrahmane","0.701" ,"Solvable"},
         };
-        String[] entetes = {"Nom", "Prenom", "Coef" , "Statut"};
-        Table = new JTable(donnees, entetes);
-        Table.setSize(600,200);
+        String[] title = {"Nom", "Prenom", "Coef" , "Statut"};
+        Table = new JTable(data, title){
+            @Override
+            public Dimension getPreferredScrollableViewportSize()
+            {
+                return new Dimension(100, 100);
+            }
+        };
     }
     public void initLabels(){
         HeaderLabel = new JLabel ();
@@ -101,6 +107,7 @@ public class LogGUI extends JFrame implements ActionListener {
         CenterPanel.setBackground((Color.WHITE));
         CenterPanel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
+        CenterPanel.setPreferredSize( new Dimension(100,100));
         gc.insets = new Insets(5, 10, 5, 10);
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.ipady = gc.anchor = GridBagConstraints.CENTER;
@@ -136,7 +143,11 @@ public class LogGUI extends JFrame implements ActionListener {
         gc.gridy = 3;
         gc.gridwidth = 2;
         gc.gridheight = 3;
-        CenterPanel.add(Table, gc);
+        JPanel Tmp = new JPanel();
+        Tmp.setBackground( new Color(0,0,0));
+            JScrollPane TmpScroll = new JScrollPane( Table );
+            TmpScroll.setPreferredSize( new Dimension(100,100));
+        CenterPanel.add( Tmp , gc);
 
         gc.gridx = 0;
         gc.gridy = 6;
@@ -189,7 +200,11 @@ public class LogGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == SolvButton){
-            CustomerGUI index = new CustomerGUI();
+            try {
+                CustomerGUI index = new CustomerGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
 

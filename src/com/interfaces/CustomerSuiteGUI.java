@@ -1,9 +1,13 @@
 package com.interfaces;
 
+import com.Customer;
+import com.algorithme.Solvabilite;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,8 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
     JComboBox SFComboBox ;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI  ;
 
-    Double Age ;
+    Customer Client;
+    Solvabilite SOLVENCIA;
 
     public void initComoboBox(){
         Object[] elements = new Object[]{"Marié", "Célebataire", "Divorcé"};
@@ -168,10 +173,11 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
 
     }
 
-    public CustomerSuiteGUI(Double age){
-        Age = age ;
+    public CustomerSuiteGUI(Customer _Client , Solvabilite _Solvencia ){
+        Client = new Customer( _Client );
+        SOLVENCIA = new Solvabilite( _Solvencia );
 
-        this.setTitle("Information Personnel <2> Solvencia");
+        this.setTitle("Information Personnel Solvencia");
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -198,7 +204,11 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == PreButton ){
-            CustomerGUI index = new CustomerGUI();
+            try {
+                CustomerGUI index = new CustomerGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == DecButton){
@@ -229,7 +239,7 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
             }
-            if (Age <= 25 )
+            if (Client.getAge() <= 25 )
             {
                 DataSolvencia.add(1.0);
                 DataSolvencia.add(0.0);
@@ -266,10 +276,11 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
                 DataSolvencia.add(1.0);
             }
 
-            //if (Solvencia( DataSolvencia ))
-            // SolvableGUI index = new SolvableGUI();
-            //else
-            NonSolvableGUI index2 = new NonSolvableGUI();
+            if ( SOLVENCIA.Solvencia( DataSolvencia )) {
+                SolvableGUI index = new SolvableGUI();
+            } else {
+                NonSolvableGUI index2 = new NonSolvableGUI();
+            }
             this.dispose();
         }
 

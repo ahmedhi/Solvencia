@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class AdminGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , SouthPanel , CenterPanel;
@@ -187,7 +188,11 @@ public class AdminGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == SolvButton){
-            CustomerGUI index = new CustomerGUI();
+            try {
+                CustomerGUI index = new CustomerGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == LogButton){

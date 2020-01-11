@@ -1,11 +1,14 @@
+[ Diapo 1 ]
 La regression logistique est une méthode qui permet de classifier un ensemble de donnée d'entrée selon 2 différentes classe. C'est donc une classification binaire. En sortie un modèle de regression logistique sors une probabilité entre 0 et 1 pour classifier les données d'entrée.
 La regression logistique est un algorithme largement répandue dans de nombreux domaines. Par exemple : 
     - En medecine pour trouver les facteurs qui caractérisent un groupe de sujets malades
     - Dans le monde des assurances elle permet de cibler une fraction de la clientèle qui sera sensible à une police d'assurance sur tel ou tel risque particulier
     - Dans le monde bancaire pour étudier la solvabilité d'un client
 Pour mieux representer ce modèle nous allons prendre l'exemple de notre projet Solvencia pour mieux représenter l'algortihme.
-    Solvencia est une application pour l'étude de solvabilité d'un client avec l'implémentation de l'algorithme de régression logistique. Donc notre programme va classifier nos passions en 2 classe :
+    Solvencia est une application pour l'étude de solvabilité d'un client avec l'implémentation de l'algorithme de régression logistique. Donc notre programme va classifier nos clients en 2 classe :
     Solvable / Non solvable
+
+[ Diapo 2 ]
     Pour que notre programme nous devons lui données les données d'entrée du client pour étudier sa solvabilité et pour mieux simplifier notre explication nous allons prendre comme features ou donnée d'entrée le salaire du client et ces dépenses  
 Pour que cela marche nous devons donnée au programme une Dataset qui va l'aider à apprendre et améliorer ces prédictions. Par exemple pour X salaires et X depense le client est solvable ou non
 Nous avons la fonction suivante : 
