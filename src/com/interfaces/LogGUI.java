@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LogGUI extends JFrame implements ActionListener {
     JPanel NorthPanel , SouthPanel , CenterPanel;
@@ -18,20 +20,32 @@ public class LogGUI extends JFrame implements ActionListener {
         GreenGrayGUI = new Color(116, 145, 134);
         DangerGUI = new Color(144, 8, 14);
     }
-    public void initTables()
-    {
-        Object[][] data = {
-                {"ASKOUR", "Hamza", "0.812" , "Solvable"},
-                {"HILALI", "Ahmed", "0.213" , "Non SOlvable "},
-                {"IDRISSI", "Taha", "0.698" , "Solvable"},
-                {"RGUIBI", "Abderrahmane","0.701" ,"Solvable"},
-        };
-        String[] title = {"Nom", "Prenom", "Coef" , "Statut"};
+    public void initTables() throws IOException {
+        FileReader input = new FileReader("src/com/algorithme/Log.txt");
+        LineNumberReader count = new LineNumberReader(input);
+        while (count.skip(Long.MAX_VALUE) > 0) {}
+
+        String[][] data = new String[ count.getLineNumber() ][7];
+
+        File Source = new File( "src/com/algorithme/Log.txt" );
+        Scanner sc = new Scanner( Source );
+        sc.nextLine();
+
+        for( int i = 0 ; sc.hasNextLine() ; i++){
+            String L = sc.nextLine();
+            String[] tab = L.split(" ");
+            data[i][0] = tab[ tab.length-2 ];
+            data[i][1] = tab[ tab.length-1 ];
+            for ( int j = 1 ; j < tab.length-2 ; j++) {
+                data[i][j+1] = tab[j];
+            }
+        }
+        String[] title = {"Nom", "Prenom", "Situation" , "Age" , "Salaire" , " Depense" , "Enfant(s)"};
         Table = new JTable(data, title){
             @Override
             public Dimension getPreferredScrollableViewportSize()
             {
-                return new Dimension(100, 100);
+                return new Dimension(400, 100);
             }
         };
     }
@@ -144,10 +158,9 @@ public class LogGUI extends JFrame implements ActionListener {
         gc.gridwidth = 2;
         gc.gridheight = 3;
         JPanel Tmp = new JPanel();
-        Tmp.setBackground( new Color(0,0,0));
-            JScrollPane TmpScroll = new JScrollPane( Table );
-            TmpScroll.setPreferredSize( new Dimension(100,100));
-        CenterPanel.add( Tmp , gc);
+        JScrollPane TmpScroll = new JScrollPane( Table );
+        Tmp.add( TmpScroll );
+        CenterPanel.add( TmpScroll , gc);
 
         gc.gridx = 0;
         gc.gridy = 6;
@@ -158,12 +171,12 @@ public class LogGUI extends JFrame implements ActionListener {
         CenterPanel.add(new JLabel(), gc);
 
     }
-    public  LogGUI(){
+    public  LogGUI() throws IOException {
         this.setTitle("Administrateur : Historique - Solvencia");
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setSize(900,430);
+        this.setSize(900,500);
         this.setLocationRelativeTo( null );
 
         initColors();
@@ -192,7 +205,11 @@ public class LogGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == LogButton){
-            LogGUI index = new LogGUI();
+            try {
+                LogGUI index = new LogGUI();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == AddConButton){

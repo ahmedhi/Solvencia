@@ -49,7 +49,7 @@ public class SolvableGUI extends JFrame implements ActionListener {
     public SolvableGUI(){
         this.getContentPane().setLayout( new BorderLayout() );
         this.getContentPane().setBackground(new Color(0x182530));
-        this.setSize(600,425);
+        this.setSize(600,500);
         this.setLocationRelativeTo( null );
         this.setUndecorated(true);
         initColors();

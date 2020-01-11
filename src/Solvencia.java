@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Solvencia {
 
     public static void main( String[] args ) throws IOException {
-        
+        //LogGUI index = new LogGUI();
         AccueilGUI index = new AccueilGUI();
 
     }
