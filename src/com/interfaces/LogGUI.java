@@ -1,6 +1,9 @@
 package com.interfaces;
 
+import com.algorithme.Solvabilite;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +17,8 @@ public class LogGUI extends JFrame implements ActionListener {
     JButton RetButton , DecButton , LogButton  , AddConButton ,  SolvButton;
     JTable Table ;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
+    Solvabilite Solvencia;
+
     public void initColors(){
         GrayGUI = new Color(24, 37, 48);
         GreenGUI = new Color(139, 193, 64);
@@ -25,7 +30,7 @@ public class LogGUI extends JFrame implements ActionListener {
         LineNumberReader count = new LineNumberReader(input);
         while (count.skip(Long.MAX_VALUE) > 0) {}
 
-        String[][] data = new String[ count.getLineNumber() ][7];
+        String[][] data = new String[ count.getLineNumber() ][8];
 
         File Source = new File( "src/com/algorithme/Log.txt" );
         Scanner sc = new Scanner( Source );
@@ -36,11 +41,12 @@ public class LogGUI extends JFrame implements ActionListener {
             String[] tab = L.split(" ");
             data[i][0] = tab[ tab.length-2 ];
             data[i][1] = tab[ tab.length-1 ];
+            data[i][7] = tab[0];
             for ( int j = 1 ; j < tab.length-2 ; j++) {
                 data[i][j+1] = tab[j];
             }
         }
-        String[] title = {"Nom", "Prenom", "Situation" , "Age" , "Salaire" , " Depense" , "Enfant(s)"};
+        String[] title = {"Nom", "Prenom", "Situation" , "Age" , "Salaire" , " Depense" , "Enfant(s)" , "Target"};
         Table = new JTable(data, title){
             @Override
             public Dimension getPreferredScrollableViewportSize()
@@ -127,7 +133,7 @@ public class LogGUI extends JFrame implements ActionListener {
         gc.ipady = gc.anchor = GridBagConstraints.CENTER;
         gc.ipadx = GridBagConstraints.CENTER;
         gc.weightx = 2;
-        gc.weighty = 7;
+        gc.weighty = 9;
 
         gc.gridx = 0;
         gc.gridy = 0;
@@ -156,23 +162,18 @@ public class LogGUI extends JFrame implements ActionListener {
         gc.gridx = 0;
         gc.gridy = 3;
         gc.gridwidth = 2;
-        gc.gridheight = 3;
-        JPanel Tmp = new JPanel();
+        gc.gridheight = 5;
         JScrollPane TmpScroll = new JScrollPane( Table );
-        Tmp.add( TmpScroll );
-        CenterPanel.add( TmpScroll , gc);
+        CenterPanel.add( TmpScroll , gc );
 
         gc.gridx = 0;
-        gc.gridy = 6;
+        gc.gridy = 8;
         CenterPanel.add(RetButton, gc);
 
-        gc.gridx = 1;
-        gc.gridy = 6;
-        CenterPanel.add(new JLabel(), gc);
-
     }
-    public  LogGUI() throws IOException {
+    public LogGUI( Solvabilite _Solvencia) throws IOException {
         this.setTitle("Administrateur : Historique - Solvencia");
+        Solvencia = _Solvencia;
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -197,7 +198,11 @@ public class LogGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == RetButton ){
-            AdminGUI index = new AdminGUI();
+            try {
+                AdminGUI index = new AdminGUI( Solvencia );
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == DecButton){
@@ -206,14 +211,14 @@ public class LogGUI extends JFrame implements ActionListener {
         }
         else if ( source == LogButton){
             try {
-                LogGUI index = new LogGUI();
+                LogGUI index = new LogGUI( Solvencia );
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             this.dispose();
         }
         else if ( source == AddConButton){
-            ContrainteGUI index = new ContrainteGUI();
+            ContrainteGUI index = new ContrainteGUI( Solvencia );
             this.dispose();
         }
         else if ( source == SolvButton){

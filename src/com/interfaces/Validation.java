@@ -6,13 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.Scanner;
 
-public class AdminGUI extends JFrame implements ActionListener {
+public class Validation extends JFrame implements ActionListener {
     JPanel NorthPanel , SouthPanel , CenterPanel;
-    JLabel NomLabel , PrenomLabel , HeaderLabel , FooterLabel , AccuranyLabel;
-    JButton ActButton , LogButton , ValidationButton , AddConButton , DecButton , SolvButton;
+    JLabel NomLabel , PrenomLabel , HeaderLabel , FooterLabel ;
+    JButton RetButton , DecButton , LogButton  , AddConButton ,  SolvButton;
     JTable Table ;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
     Solvabilite Solvencia;
@@ -22,6 +25,37 @@ public class AdminGUI extends JFrame implements ActionListener {
         GreenGUI = new Color(139, 193, 64);
         GreenGrayGUI = new Color(116, 145, 134);
         DangerGUI = new Color(144, 8, 14);
+    }
+    public void initTables() throws IOException {
+        FileReader input = new FileReader("src/com/algorithme/Validation.txt");
+        LineNumberReader count = new LineNumberReader(input);
+        while (count.skip(Long.MAX_VALUE) > 0) {}
+
+        Object[][] data = new String[ count.getLineNumber() ][9];
+
+        File Source = new File( "src/com/algorithme/Validation.txt" );
+        Scanner sc = new Scanner( Source );
+        sc.nextLine();
+
+        for( int i = 0 ; sc.hasNextLine() ; i++){
+            String L = sc.nextLine();
+            String[] tab = L.split(" ");
+            data[i][0] = tab[ tab.length-2 ];
+            data[i][1] = tab[ tab.length-1 ];
+            data[i][7] = tab[0];
+            data[i][8] = new JButton("A valider");
+            for ( int j = 1 ; j < tab.length-2 ; j++) {
+                data[i][j+1] = tab[j];
+            }
+        }
+        String[] title = {"Nom", "Prenom", "Situation" , "Age" , "Salaire" , " Depense" , "Enfant(s)" , "Target" , "Action"};
+        Table = new JTable(data, title){
+            @Override
+            public Dimension getPreferredScrollableViewportSize()
+            {
+                return new Dimension(400, 100);
+            }
+        };
     }
     public void initLabels(){
         HeaderLabel = new JLabel ();
@@ -41,49 +75,22 @@ public class AdminGUI extends JFrame implements ActionListener {
         PrenomLabel = new JLabel (" Prénom  : HILALI");
         PrenomLabel.setFont(font);
         PrenomLabel.setForeground(GreenGrayGUI);
-
-        AccuranyLabel = new JLabel ("Accurancy " + Solvencia.getAccurancy() + " %" );
-        AccuranyLabel.setFont(font);
-        AccuranyLabel.setForeground(GreenGrayGUI);
-    }
-    public void initTables() throws IOException {
-        String[][] data = new String[5][11];
-
-        File Source = new File( "src/com/algorithme/WeightLog.txt" );
-        Scanner sc = new Scanner( Source );
-
-        String L = sc.nextLine();
-        String[] tab = L.split("-");
-        String[] NomContrainte = new String[5];
-        System.arraycopy(tab, 0, NomContrainte, 0, 5);
-
-        L = sc.nextLine();
-        tab = L.split(" ");
-        String[] WeightContrainte = new String[5];;
-        System.arraycopy(tab, 0, WeightContrainte, 0, 5);
-
-        for( int i = 0 ; i < 5 ; i++ ){
-            data[i][0] = NomContrainte[i];
-            data[i][1] = WeightContrainte[i];
-        }
-
-        String[] title = {"Nom de la contrainte", "Weight"};
-        Table = new JTable(data, title){
-            @Override
-            public Dimension getPreferredScrollableViewportSize()
-            {
-                return new Dimension(400, 100);
-            }
-        };
     }
     public void initButtons()
     {
-        ActButton = new JButton("Actualiser");
-        ActButton.setBackground(Color.WHITE);
-        ActButton.setForeground(GreenGUI);
-        ActButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
-        ActButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, GreenGUI));
-        ActButton.addActionListener((ActionListener) this);
+        RetButton = new JButton("Retour");
+        RetButton.setBackground(GreenGUI);
+        RetButton.setForeground(Color.WHITE);
+        RetButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
+        RetButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, GreenGUI));
+        RetButton.addActionListener((ActionListener) this);
+
+        DecButton = new JButton("Deconnexion");
+        DecButton.setBackground(Color.WHITE);
+        DecButton.setForeground(DangerGUI);
+        DecButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
+        DecButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, DangerGUI));
+        DecButton.addActionListener( this );
 
         LogButton = new JButton("Historique");
         LogButton.setBackground(Color.WHITE);
@@ -92,26 +99,12 @@ public class AdminGUI extends JFrame implements ActionListener {
         LogButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, GreenGUI));
         LogButton.addActionListener( this );
 
-        ValidationButton = new JButton("Besoin de validation");
-        ValidationButton.setBackground(Color.WHITE);
-        ValidationButton.setForeground(GreenGUI);
-        ValidationButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
-        ValidationButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, GreenGUI));
-        ValidationButton.addActionListener( this );
-
         AddConButton = new JButton("Ajouter Contrainte ");
         AddConButton.setBackground(Color.WHITE);
         AddConButton.setForeground(GreenGUI);
         AddConButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
         AddConButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, GreenGUI));
         AddConButton.addActionListener( this );
-
-        DecButton = new JButton("Deconnexion");
-        DecButton.setBackground(Color.WHITE);
-        DecButton.setForeground(DangerGUI);
-        DecButton.setFont(new Font("Bodoni MT", Font.BOLD, 15));
-        DecButton.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, DangerGUI));
-        DecButton.addActionListener( this );
 
         SolvButton = new JButton("Solvencia");
         SolvButton.setBackground(Color.WHITE);
@@ -136,12 +129,13 @@ public class AdminGUI extends JFrame implements ActionListener {
         CenterPanel.setBackground((Color.WHITE));
         CenterPanel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
+        CenterPanel.setPreferredSize( new Dimension(100,100));
         gc.insets = new Insets(5, 10, 5, 10);
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.ipady = gc.anchor = GridBagConstraints.CENTER;
         gc.ipadx = GridBagConstraints.CENTER;
         gc.weightx = 2;
-        gc.weighty = 7;
+        gc.weighty = 9;
 
         gc.gridx = 0;
         gc.gridy = 0;
@@ -159,35 +153,29 @@ public class AdminGUI extends JFrame implements ActionListener {
         gc.gridy = 1;
         CenterPanel.add(PrenomLabel, gc);
 
-
-        gc.gridwidth = 2;
         gc.gridx = 0;
         gc.gridy = 2;
-        JPanel Tmp = new JPanel( new GridLayout(1 , 3));
-        Tmp.add( AddConButton );
-        Tmp.add( LogButton );
-        Tmp.add( ValidationButton );
-        Tmp.setBackground( new Color( 0 , 0 , 0, 0));
-        CenterPanel.add( Tmp , gc);
+        CenterPanel.add(AddConButton, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 2;
+        CenterPanel.add(LogButton, gc);
 
         gc.gridx = 0;
         gc.gridy = 3;
-        gc.gridheight = 3;
+        gc.gridwidth = 2;
+        gc.gridheight = 5;
         JScrollPane TmpScroll = new JScrollPane( Table );
         CenterPanel.add( TmpScroll , gc );
-        CenterPanel.add(TmpScroll, gc);
 
         gc.gridx = 0;
-        gc.gridy = 6;
-        CenterPanel.add(AccuranyLabel, gc);
+        gc.gridy = 8;
+        CenterPanel.add(RetButton, gc);
 
-        gc.gridx = 1;
-        gc.gridy = 6;
-        CenterPanel.add(ActButton, gc);
     }
-    public  AdminGUI( Solvabilite _Solvencia ) throws IOException {
-        this.setTitle("Administrateur | Solvencia");
-        Solvencia = new Solvabilite( _Solvencia );
+    public Validation(Solvabilite _Solvencia) throws IOException {
+        this.setTitle("Administrateur : Historique - Solvencia");
+        Solvencia = _Solvencia;
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -205,37 +193,27 @@ public class AdminGUI extends JFrame implements ActionListener {
         this.getContentPane().add(SouthPanel,BorderLayout.SOUTH);
 
         this.setVisible( true );
-
-
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if( source == ActButton ){
+        if( source == RetButton ){
             try {
-                Solvencia.train();
                 AdminGUI index = new AdminGUI( Solvencia );
-                this.dispose();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+            this.dispose();
         }
         else if ( source == DecButton){
             LoginGUI index = new LoginGUI();
             this.dispose();
         }
-        else if ( source == SolvButton){
-            try {
-                CustomerGUI index = new CustomerGUI();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            this.dispose();
-        }
         else if ( source == LogButton){
             try {
-                LogGUI index = new LogGUI( Solvencia );
+                Validation index = new Validation( Solvencia );
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -245,9 +223,9 @@ public class AdminGUI extends JFrame implements ActionListener {
             ContrainteGUI index = new ContrainteGUI( Solvencia );
             this.dispose();
         }
-        else if ( source == ValidationButton){
+        else if ( source == SolvButton){
             try {
-                Validation index = new Validation( Solvencia );
+                CustomerGUI index = new CustomerGUI();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

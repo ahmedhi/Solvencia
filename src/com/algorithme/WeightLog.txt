@@ -1,0 +1,2 @@
+Situation Familial-Age-Salaire-Depense-Enfant(s)
+2.034 1.157 0.903 1.343 1.675 1.136 0.401 2.898 2.207 2.163 2.448

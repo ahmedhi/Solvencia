@@ -7,7 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,29 +219,38 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == AdminButton){
-            AdminGUI index = new AdminGUI();
+            try {
+                AdminGUI index = new AdminGUI( SOLVENCIA );
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == SendButton){
             List<Double> DataSolvencia  ;
             DataSolvencia = new ArrayList<>();
+            String Data = "";
             if(SFComboBox.getSelectedItem().toString().equals("Marié") )
             {
+                Data += " Marie";
                 DataSolvencia.add(1.0);
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(0.0);
             }
             else if(SFComboBox.getSelectedItem().toString().equals("Célibataire") )
             {
+                Data += " Celibataire";
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
                 DataSolvencia.add(0.0);
             }
             else {
+                Data += " Divorse";
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
             }
+            Data += " " + Client.getAge();
             if (Client.getAge() <= 25 )
             {
                 DataSolvencia.add(1.0);
@@ -248,6 +260,7 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
             }
+            Data += " " + SalaireText.getText();
             if(Double.parseDouble(SalaireText.getText()) <= 10000)
             {
                 DataSolvencia.add(1.0);
@@ -257,6 +270,7 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
             }
+            Data += " " + DepenseText.getText();
             if(Double.parseDouble(DepenseText.getText()) <= 7000)
             {
                 DataSolvencia.add(1.0);
@@ -266,6 +280,7 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
                 DataSolvencia.add(0.0);
                 DataSolvencia.add(1.0);
             }
+            Data += " " + NbrText.getText();
             if(Double.parseDouble(NbrText.getText()) <= 2)
             {
                 DataSolvencia.add(1.0);
@@ -281,6 +296,18 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
             } else {
                 NonSolvableGUI index2 = new NonSolvableGUI();
             }
+
+            try {
+                FileWriter WeightF = new FileWriter("src/com/algorithme/Log.txt", true);
+                WeightF.write( "\n"+ SOLVENCIA.Solvencia( DataSolvencia )
+                        + Data + " " + NbrText.getText()
+                        + " " + Client.getNom()
+                        + " " + Client.getPrenom());
+                WeightF.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
             this.dispose();
         }
 

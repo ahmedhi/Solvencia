@@ -24,3 +24,4 @@ Target | SF | Age | Salaire | Depense | NbrEnfant | Nom | Prenom
 0 Divorse 23 15000 8000 4 HIZABRI YOUSSEF
 1 Marie 28 9000 8000 1 ZGAOUA MOHAMMED
 1 Marie 28 9000 8000 1 SEMLANE OUMAIMA
+true Divorse 40 12000 1000 2 2 test test

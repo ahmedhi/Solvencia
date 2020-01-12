@@ -1,9 +1,10 @@
 package com.algorithme;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
+import com.interfaces.AccueilGUI;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,11 @@ public class Solvabilite {
     DataSet DataSet;
     List<Double> Weights;
     Double bias;
+    int Accurancy;
+
+    public int getAccurancy() {
+        return Accurancy;
+    }
 
     public com.algorithme.DataSet getDataSet() {
         return DataSet;
@@ -169,7 +175,7 @@ public class Solvabilite {
         return Result;
     }
 
-    void train(){
+    public void train() throws IOException {
         Matrice _features = DataSet.getFeatures();
         List<Integer> _targets  = DataSet.getTargets();
 
@@ -238,12 +244,28 @@ public class Solvabilite {
                 }
             }
             predictions = predict(_features, Weights, bias);
-            System.out.println(" Accurancy = " + (int) compute_accuracy(predictions, _targets) + "%");
+            Accurancy = (int) compute_accuracy(predictions, _targets);
+            System.out.println(" Accurancy = " + Accurancy + "%");
             System.out.println("\t Cost = " + (int) cost(predictions, _targets) + "%");
         }while ( !error );
 
         System.out.println("\nWeight = \n" + Weights );
         System.out.println("Bias = " + bias);
+
+        File WeightFile = new File("src/com/algorithme/WeightLog.txt");
+        WeightFile.delete();
+
+            File newFile = new File("src/com/algorithme/WeightLog.txt");
+            FileWriter WeightF = new FileWriter("src/com/algorithme/WeightLog.txt");
+            WeightF.write( "Situation Familial-Age-Salaire-Depense-Enfant(s)\n" );
+                for( int i = 0 ; i < Weights.size() ; i++){
+                    BigDecimal bd = new BigDecimal(Weights.get(i)).setScale(3, RoundingMode.HALF_EVEN);
+                    if( i != Weights.size()-1 )
+                        WeightF.write( ""+ bd.doubleValue() + " ");
+                    else
+                        WeightF.write( ""+ bd.doubleValue() );
+                }
+            WeightF.close();
 
     }
 
@@ -267,6 +289,7 @@ public class Solvabilite {
         DataSet = _Copie.getDataSet();
         Weights = _Copie.getWeights();
         bias = _Copie.getBias();
+        Accurancy = _Copie.getAccurancy();
     }
 
     public Solvabilite() throws IOException {
@@ -281,8 +304,10 @@ public class Solvabilite {
 
         System.out.print("Initialisation des variables ... ");
             InitVariable();
+            /*
                 System.out.println( " Bias : " + bias);
                 System.out.println( " Weights : \n" + Weights);
+             */
         System.out.println("Fin de l'initialisation des variables");
         System.out.println("*************************************");
 
@@ -299,14 +324,14 @@ public class Solvabilite {
         System.out.println( "\n Les targets : \n" + DataSet.getTargets());
         System.out.println("Fin du calcule de l'Activation");
         System.out.println("*************************************");
-         */
+
 
         System.out.print("Début de l'entrainement ... ");
         train();
         System.out.println("Fin de l'entrainement");
         System.out.println("*************************************");
 
-        /*
+
         System.out.print("Début du test ... ");
             List<Double> Data = new ArrayList<>();
                 for ( int i = 0 ; i < DataSet.getWidth() ; i++){

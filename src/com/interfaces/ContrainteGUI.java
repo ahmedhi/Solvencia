@@ -1,5 +1,7 @@
 package com.interfaces;
 
+import com.algorithme.Solvabilite;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,8 @@ public class ContrainteGUI extends JFrame implements ActionListener {
     JButton RetButton , DecButton , AddButton , SolvButton;
     JTextField NomText , SlugText;
     Color GrayGUI , GreenGUI , GreenGrayGUI , DangerGUI ;
+    Solvabilite Solvencia;
+
     public void initColors(){
         GrayGUI = new Color(24, 37, 48);
         GreenGUI = new Color(139, 193, 64);
@@ -147,8 +151,9 @@ public class ContrainteGUI extends JFrame implements ActionListener {
         CenterPanel.add(AddButton,gc);
 
     }
-    public  ContrainteGUI(){
+    public ContrainteGUI( Solvabilite _Solvencia ){
         this.setTitle("Administrateur : Ajouter Contraintes - Solvencia");
+        Solvencia = new Solvabilite( _Solvencia );
 
         this.getContentPane().setLayout( new BorderLayout() );
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -174,7 +179,11 @@ public class ContrainteGUI extends JFrame implements ActionListener {
         Object source = e.getSource();
 
         if( source == RetButton ){
-            AdminGUI index = new AdminGUI();
+            try {
+                AdminGUI index = new AdminGUI( Solvencia );
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
         else if ( source == DecButton){

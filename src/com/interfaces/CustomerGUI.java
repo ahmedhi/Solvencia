@@ -207,7 +207,11 @@ public class CustomerGUI extends JFrame implements ActionListener {
             this.dispose();
         }
         else if ( source == AdminButton){
-            AdminGUI index = new AdminGUI();
+            try {
+                AdminGUI index = new AdminGUI( SOLVENCIA );
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             this.dispose();
         }
     }
