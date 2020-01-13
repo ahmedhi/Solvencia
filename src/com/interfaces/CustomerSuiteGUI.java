@@ -299,8 +299,12 @@ public class CustomerSuiteGUI extends JFrame implements ActionListener {
 
             try {
                 FileWriter WeightF = new FileWriter("src/com/algorithme/Log.txt", true);
-                WeightF.write( "\n"+ SOLVENCIA.Solvencia( DataSolvencia )
-                        + Data + " " + NbrText.getText()
+                WeightF.write( "\n" );
+                if(SOLVENCIA.Solvencia( DataSolvencia ))
+                    WeightF.write( "1" );
+                else
+                    WeightF.write("0");
+                WeightF.write(" " + Data + " " + NbrText.getText()
                         + " " + Client.getNom()
                         + " " + Client.getPrenom());
                 WeightF.close();
